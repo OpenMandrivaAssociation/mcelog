@@ -1,6 +1,6 @@
 %define name	mcelog
-%define version 0.7
-%define release %mkrel 1
+%define version 0.8
+%define release %mkrel 0.1
 
 Name:		%{name}
 Version:	%{version}
@@ -8,8 +8,8 @@ Release:	%{release}
 Summary:	The kernel machine check logger
 License:	GPL 
 Group:		System/Kernel and hardware
-Url:		ftp://ftp.x86-64.org/pub/linux/tools/mcelog/
-Source:		ftp://ftp.x86-64.org/pub/linux/tools/mcelog/%{name}-%{version}.tar.bz2
+Url:		ftp://ftp.suse.com/pub/people/ak/mcelog
+Source:		ftp://ftp.suse.com/pub/people/ak/mcelog/%{name}-%{version}pre.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 %description
@@ -18,7 +18,7 @@ on x86-64. It decodes the binary machine check records into a human
 readable format.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}pre
 
 %build
 %make CFLAGS="%{optflags}"
