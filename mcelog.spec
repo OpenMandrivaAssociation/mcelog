@@ -10,7 +10,6 @@ License:	GPL
 Group:		System/Kernel and hardware
 Url:		ftp://ftp.suse.com/pub/people/ak/mcelog
 Source:		ftp://ftp.suse.com/pub/people/ak/mcelog/%{name}-%{version}pre.tar.gz
-BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 %description
 mcelog is the user space interface to the in kernel machine check logger
