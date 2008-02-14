@@ -8,6 +8,7 @@ Release:	%{release}
 Summary:	The kernel machine check logger
 License:	GPL 
 Group:		System/Kernel and hardware
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Url:		ftp://ftp.suse.com/pub/people/ak/mcelog
 Source:		ftp://ftp.suse.com/pub/people/ak/mcelog/%{name}-%{version}pre.tar.gz
 
