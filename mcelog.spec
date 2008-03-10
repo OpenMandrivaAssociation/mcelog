@@ -1,6 +1,6 @@
 %define name	mcelog
 %define version 0.8
-%define release %mkrel 0.1
+%define release %mkrel 0.2
 
 Name:		%{name}
 Version:	%{version}
