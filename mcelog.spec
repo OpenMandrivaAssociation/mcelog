@@ -1,16 +1,21 @@
-%define name	mcelog
-%define version 0.8
-%define release %mkrel 0.2
+%define pre_ver pre
+%define git 20090623
+%define rel_num 1
+%if "%{git}" != ""
+%define rel 0.%{?pre_ver:%{pre_ver}.}git%{git}.%{rel_num}
+%else
+%define rel %{?pre_ver:0.%{pre_ver}.}%{rel_num}
+%endif
 
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Name:		mcelog
+Version:	0.9
+Release:	%mkrel %{rel}
 Summary:	The kernel machine check logger
-License:	GPL 
+License:	GPLv2
 Group:		System/Kernel and hardware
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-Url:		ftp://ftp.suse.com/pub/people/ak/mcelog
-Source:		ftp://ftp.suse.com/pub/people/ak/mcelog/%{name}-%{version}pre.tar.gz
+Url:		ftp://ftp.x86-64.org/pub/linux/tools/mcelog/
+Source:		mcelog-%{version}%{?pre_ver:%{pre_ver}}%{?git:-git%{git}}.tar.lzma
+BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 %description
 mcelog is the user space interface to the in kernel machine check logger
@@ -18,7 +23,7 @@ on x86-64. It decodes the binary machine check records into a human
 readable format.
 
 %prep
-%setup -q -n %{name}-%{version}pre
+%setup -q -n %{name}-%{version}%{?pre_ver:%{pre_ver}}%{?git:-git%{git}}
 
 %build
 %make CFLAGS="%{optflags}"
@@ -30,7 +35,7 @@ mkdir -p %{buildroot}/%{_mandir}/man8
 mkdir -p %{buildroot}/%{_sysconfdir}/logrotate.d/
 mkdir -p %{buildroot}/%{_sysconfdir}/cron.hourly/
 
-%makeinstall
+%makeinstall etcprefix=%{buildroot}
 cp mcelog.logrotate %{buildroot}/%{_sysconfdir}/logrotate.d/%{name}
 cp mcelog.cron %{buildroot}/%{_sysconfdir}/cron.hourly/%{name}
 
@@ -43,3 +48,4 @@ rm -rf %{buildroot}
 %{_mandir}/man8/*
 %{_sysconfdir}/cron.hourly/%{name}
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
+%config(noreplace) %{_sysconfdir}/mcelog.conf
