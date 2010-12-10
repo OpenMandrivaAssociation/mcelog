@@ -1,6 +1,6 @@
 %define pre_ver pre
 %define git 20090623
-%define rel_num 1
+%define rel_num 2
 %if "%{git}" != ""
 %define rel 0.%{?pre_ver:%{pre_ver}.}git%{git}.%{rel_num}
 %else
