@@ -49,3 +49,41 @@ rm -rf %{buildroot}
 %{_sysconfdir}/cron.hourly/%{name}
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %config(noreplace) %{_sysconfdir}/mcelog.conf
+
+
+%changelog
+* Fri Dec 10 2010 Oden Eriksson <oeriksson@mandriva.com> 0.9-0.pre.git20090623.2mdv2011.0
++ Revision: 620308
+- the mass rebuild of 2010.0 packages
+
+* Fri Aug 21 2009 Herton Ronaldo Krzesinski <herton@mandriva.com.br> 0.9-0.pre.git20090623.1mdv2010.0
++ Revision: 419325
+- Updated to git snapshot version (0.9pre-git20090623) compatible with
+  kernel 2.6.31
+- Updated BuildRoot/License tags.
+
+* Mon Mar 10 2008 Erwan Velu <erwan@mandriva.org> 0.8-0.2mdv2008.1
++ Revision: 183364
+- Rebuild
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - fix no-buildroot-tag
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Fri May 04 2007 Erwan Velu <erwan@mandriva.org> 0.8-0.1mdv2008.0
++ Revision: 22425
+- 0.8pre
+- Import mcelog
+
+
+
+* Wed May 03 2006 Guillaume Rousse <guillomovitch@mandriva.org> 0.7-1mdk
+- New release 0.7
+
+* Thu Feb 09 2006 Guillaume Rousse <guillomovitch@mandriva.org> 0.6-1mdk
+- new version
+- spec cleanup
+- fix optimisations
+
+* Mon Dec 19 2005 Erwan Velu <erwan@seanodes.com> 0.5-1mdk
+- Initial Release
