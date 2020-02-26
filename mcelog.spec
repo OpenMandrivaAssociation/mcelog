@@ -1,21 +1,12 @@
-%define pre_ver pre
-%define git 20090623
-%define rel_num 2
-%if "%{git}" != ""
-%define rel 0.%{?pre_ver:%{pre_ver}.}git%{git}.%{rel_num}
-%else
-%define rel %{?pre_ver:0.%{pre_ver}.}%{rel_num}
-%endif
-
 Name:		mcelog
-Version:	0.9
-Release:	%mkrel %{rel}
+Version:	168
+Release:	1
 Summary:	The kernel machine check logger
 License:	GPLv2
 Group:		System/Kernel and hardware
-Url:		ftp://ftp.x86-64.org/pub/linux/tools/mcelog/
-Source:		mcelog-%{version}%{?pre_ver:%{pre_ver}}%{?git:-git%{git}}.tar.lzma
-BuildRoot:	%{_tmppath}/%{name}-%{version}
+Url:		http://www.mcelog.org
+Source0:	https://github.com/andikleen/mcelog/archive/v%{version}/%{name}-%{version}.tar.gz
+Source10:	mcelog.service
 
 %description
 mcelog is the user space interface to the in kernel machine check logger
@@ -23,33 +14,49 @@ on x86-64. It decodes the binary machine check records into a human
 readable format.
 
 %prep
-%setup -q -n %{name}-%{version}%{?pre_ver:%{pre_ver}}%{?git:-git%{git}}
+%setup -q
 
 %build
-%make CFLAGS="%{optflags}"
+%make_build \
+	CFLAGS="%{optflags}" \
+	LDFLAGS="%{ldflags}"
 
 %install
-rm -rf %{buildroot}
-mkdir -p %{buildroot}/%{_sbindir}
-mkdir -p %{buildroot}/%{_mandir}/man8
-mkdir -p %{buildroot}/%{_sysconfdir}/logrotate.d/
-mkdir -p %{buildroot}/%{_sysconfdir}/cron.hourly/
+%make_install
 
-%makeinstall etcprefix=%{buildroot}
-cp mcelog.logrotate %{buildroot}/%{_sysconfdir}/logrotate.d/%{name}
-cp mcelog.cron %{buildroot}/%{_sysconfdir}/cron.hourly/%{name}
+install -Dpm644 mcelog.logrotate %{buildroot}/%{_sysconfdir}/logrotate.d/%{name}
 
-%clean
-rm -rf %{buildroot}
+# Don't install as we prefer systemd service
+#install -Dpm755 mcelog.cron %{buildroot}/%{_sysconfdir}/cron.hourly/%{name}
+
+#systemd
+install -Dpm644 %{_sourcedir}/mcelog.service %{buildroot}%{_unitdir}/%{name}.service
+
+%post
+%_post_service %{name}
+
+%preun
+%_preun_service %{name}
 
 %files
-%defattr(-,root,root)
+%doc README.md README.releases CHANGES
 %{_sbindir}/mcelog
-%{_mandir}/man8/*
-%{_sysconfdir}/cron.hourly/%{name}
+%{_mandir}/man8/mcelog.8.xz
+%{_mandir}/man5/mcelog.conf.5.xz
+%{_mandir}/man5/mcelog.triggers.5.xz
+#%{_sysconfdir}/cron.hourly/%{name}
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
-%config(noreplace) %{_sysconfdir}/mcelog.conf
-
+%config(noreplace) %{_sysconfdir}/mcelog/mcelog.conf
+%{_sysconfdir}/mcelog/bus-error-trigger
+%{_sysconfdir}/mcelog/cache-error-trigger
+%{_sysconfdir}/mcelog/dimm-error-trigger
+%{_sysconfdir}/mcelog/iomca-error-trigger
+%{_sysconfdir}/mcelog/page-error-trigger
+%{_sysconfdir}/mcelog/page-error-post-sync-soft-trigger
+%{_sysconfdir}/mcelog/page-error-pre-sync-soft-trigger
+%{_sysconfdir}/mcelog/unknown-error-trigger
+%{_sysconfdir}/mcelog/socket-memory-error-trigger
+%{_unitdir}/%{name}.service
 
 %changelog
 * Fri Dec 10 2010 Oden Eriksson <oeriksson@mandriva.com> 0.9-0.pre.git20090623.2mdv2011.0
