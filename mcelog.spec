@@ -41,9 +41,9 @@ install -Dpm644 %{_sourcedir}/mcelog.service %{buildroot}%{_unitdir}/%{name}.ser
 %files
 %doc README.md README.releases CHANGES
 %{_sbindir}/mcelog
-%{_mandir}/man8/mcelog.8.xz
-%{_mandir}/man5/mcelog.conf.5.xz
-%{_mandir}/man5/mcelog.triggers.5.xz
+%{_mandir}/man8/mcelog.8.*
+%{_mandir}/man5/mcelog.conf.5.*
+%{_mandir}/man5/mcelog.triggers.5.*
 #%{_sysconfdir}/cron.hourly/%{name}
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %config(noreplace) %{_sysconfdir}/mcelog/mcelog.conf
