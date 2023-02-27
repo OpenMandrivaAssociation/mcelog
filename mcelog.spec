@@ -1,6 +1,6 @@
 Name:		mcelog
-Version:	169
-Release:	2
+Version:	191
+Release:	1
 Summary:	The kernel machine check logger
 License:	GPLv2
 Group:		System/Kernel and hardware
@@ -14,7 +14,10 @@ on x86-64. It decodes the binary machine check records into a human
 readable format.
 
 %prep
-%setup -q
+%autosetup -p1
+%if "%{_bindir}" == "%{_sbindir}"
+sed -i -e 's,/sbin,/bin,g' Makefile
+%endif
 
 %build
 %make_build \
@@ -52,45 +55,9 @@ install -Dpm644 %{_sourcedir}/mcelog.service %{buildroot}%{_unitdir}/%{name}.ser
 %{_sysconfdir}/mcelog/dimm-error-trigger
 %{_sysconfdir}/mcelog/iomca-error-trigger
 %{_sysconfdir}/mcelog/page-error-trigger
+%{_sysconfdir}/mcelog/page-error-counter-replacement-trigger
 %{_sysconfdir}/mcelog/page-error-post-sync-soft-trigger
 %{_sysconfdir}/mcelog/page-error-pre-sync-soft-trigger
 %{_sysconfdir}/mcelog/unknown-error-trigger
 %{_sysconfdir}/mcelog/socket-memory-error-trigger
 %{_unitdir}/%{name}.service
-
-%changelog
-* Fri Dec 10 2010 Oden Eriksson <oeriksson@mandriva.com> 0.9-0.pre.git20090623.2mdv2011.0
-+ Revision: 620308
-- the mass rebuild of 2010.0 packages
-
-* Fri Aug 21 2009 Herton Ronaldo Krzesinski <herton@mandriva.com.br> 0.9-0.pre.git20090623.1mdv2010.0
-+ Revision: 419325
-- Updated to git snapshot version (0.9pre-git20090623) compatible with
-  kernel 2.6.31
-- Updated BuildRoot/License tags.
-
-* Mon Mar 10 2008 Erwan Velu <erwan@mandriva.org> 0.8-0.2mdv2008.1
-+ Revision: 183364
-- Rebuild
-
-  + Thierry Vignaud <tv@mandriva.org>
-    - fix no-buildroot-tag
-    - kill re-definition of %%buildroot on Pixel's request
-
-* Fri May 04 2007 Erwan Velu <erwan@mandriva.org> 0.8-0.1mdv2008.0
-+ Revision: 22425
-- 0.8pre
-- Import mcelog
-
-
-
-* Wed May 03 2006 Guillaume Rousse <guillomovitch@mandriva.org> 0.7-1mdk
-- New release 0.7
-
-* Thu Feb 09 2006 Guillaume Rousse <guillomovitch@mandriva.org> 0.6-1mdk
-- new version
-- spec cleanup
-- fix optimisations
-
-* Mon Dec 19 2005 Erwan Velu <erwan@seanodes.com> 0.5-1mdk
-- Initial Release
