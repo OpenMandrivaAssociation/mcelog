@@ -4,7 +4,7 @@ Release:	1
 Summary:	The kernel machine check logger
 License:	GPLv2
 Group:		System/Kernel and hardware
-Url:		http://www.mcelog.org
+Url:		https://www.mcelog.org
 Source0:	https://github.com/andikleen/mcelog/archive/v%{version}/%{name}-%{version}.tar.gz
 Source10:	mcelog.service
 
