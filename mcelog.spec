@@ -1,5 +1,5 @@
 Name:		mcelog
-Version:	205
+Version:	206
 Release:	1
 Summary:	The kernel machine check logger
 License:	GPLv2
