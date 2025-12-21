@@ -8,6 +8,7 @@ Url:		https://www.mcelog.org
 Source0:	https://github.com/andikleen/mcelog/archive/v%{version}/%{name}-%{version}.tar.gz
 Source10:	mcelog.service
 
+BuildRequires:	make
 %description
 mcelog is the user space interface to the in kernel machine check logger
 on x86-64. It decodes the binary machine check records into a human
